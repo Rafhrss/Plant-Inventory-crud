@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Service {
+  id          String   @id @default(cuid()) // ID unik yang aman
+  title       String   @unique              // Nama layanan (misal: "Web Development")
+  slug        String   @unique              // URL ramah SEO (misal: "web-development")
+  description String?  @db.Text             // Deskripsi panjang menggunakan tipe Text
+  price       Decimal  @default(0)          // Harga layanan
+  isActive    Boolean  @default(true)       // Status layanan aktif atau tidak
+  createdAt   DateTime @default(now())      // Otomatis isi waktu saat dibuat
+  updatedAt   DateTime @updatedAt           // Otomatis update waktu saat data diubah
+
+  @@map("services") // Best practice: nama tabel di database pakai huruf kecil/jamak
+}
