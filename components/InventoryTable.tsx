@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import EditDialog from "./EditDialog";
 import CreateDialog from "./CreateDialog";
+import DeleteDialog from "./DeleteDialog";
 
 interface Plant {
   id: string;
@@ -71,7 +72,7 @@ export default function InventoryTable({initialData} : {initialData: Plant[] }) 
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-4">
                   <EditDialog plant={plant}/>
-                  <button className="text-red-500 hover:underline">Delete</button>
+                  <DeleteDialog plant={plant}/>
                 </div>
               </TableCell>
             </TableRow>
