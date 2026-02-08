@@ -12,8 +12,9 @@ import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { Combobox } from "./ui/combo-box";
 import { useState } from "react";
-import AlertDialogDemo from "@/components/CreateDialog";
 import { Button } from "./ui/button";
+import EditDialog from "./EditDialog";
+import CreateDialog from "./CreateDialog";
 
 interface Plant {
   id: string;
@@ -37,7 +38,7 @@ export default function InventoryTable({initialData} : {initialData: Plant[] }) 
         </div>
         <Combobox value={selectedCategory} onChange={(val) => setSelectedCategory(val)}/>
           <Button variant="default" className="cursor-pointer ml-auto font-bold flex items-center gap-2">
-            <AlertDialogDemo/>
+            <CreateDialog/>
           </Button>
       </div>
 
@@ -69,7 +70,7 @@ export default function InventoryTable({initialData} : {initialData: Plant[] }) 
               <TableCell className="font-bold">{plant.stock}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-4">
-                  <button className="text-blue-500 hover:underline">Edit</button>
+                  <EditDialog plant={plant}/>
                   <button className="text-red-500 hover:underline">Delete</button>
                 </div>
               </TableCell>
