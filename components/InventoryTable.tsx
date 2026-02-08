@@ -12,33 +12,35 @@ import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { Combobox } from "./ui/combo-box";
 import { useState } from "react";
+import AlertDialogDemo from "@/components/CreateDialog";
+import { Button } from "./ui/button";
 
-const plants = [
-  {
-    id: 1,
-    name: "Monstera Deliciosa",
-    category: "Tropical",
-    price: "$25.00",
-    stock: 15,
+interface Plant {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  stock: number;
+}
 
-  },
-];
-
-export default function InventoryTable() {
+export default function InventoryTable({initialData} : {initialData: Plant[] }) {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   return (
     <div className="w-full">
       <div className="flex items-center gap-2 py-4">
-        <div className="relative max-w--sm w-full">
+        <div className="relative max-w-sm w-full">
           <Input placeholder="Filter plants..."
           className="pl-10" />
 
           <Search className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2"/>
         </div>
         <Combobox value={selectedCategory} onChange={(val) => setSelectedCategory(val)}/>
-
+          <Button variant="default" className="cursor-pointer ml-auto font-bold flex items-center gap-2">
+            <AlertDialogDemo/>
+          </Button>
       </div>
+
       <Table>
         <TableHeader>
           <TableRow>
@@ -51,20 +53,29 @@ export default function InventoryTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {plants.map((plant) => (
+          {initialData.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={6} className="text-center py-10">
+                No Plants Found. Try adding some !
+              </TableCell>
+            </TableRow>
+          ) : (
+          initialData.map((plant) => (
             <TableRow key={plant.id}>
+              <TableCell className="font-mono text-xs">{plant.id.slice(0,5)}</TableCell>
               <TableCell>{plant.name}</TableCell>
               <TableCell>{plant.category}</TableCell>
-              <TableCell>{plant.price}</TableCell>
+              <TableCell>{plant.price.toLocaleString()}</TableCell>
               <TableCell className="font-bold">{plant.stock}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-4">
-                  <h1>Edit Button</h1>
-                  <h1>Delete Button</h1>
+                  <button className="text-blue-500 hover:underline">Edit</button>
+                  <button className="text-red-500 hover:underline">Delete</button>
                 </div>
               </TableCell>
             </TableRow>
-          ))}
+          ))
+          )}
         </TableBody>
       </Table>
     </div>

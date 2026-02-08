@@ -10,13 +10,13 @@ datasource db {
 model Plant {
   id          String   @id @default(cuid())
   name        String
-  description String?  @db.Text        // Pakai @db.Text supaya bisa simpan deskripsi panjang
+  description String?  @db.Text
   category    String
-  stock       Int      @default(0)     // Tambahkan default value 0 agar tidak error jika kosong
-  price       Float    @default(0.0)   // Tambahkan default value
+  stock       Int      @default(0)
+  price       Float    @default(0.0)
   imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@map("plants") // Nama tabel di database jadi 'plants' (huruf kecil & jamak)
+  @@map("plants")
 }
